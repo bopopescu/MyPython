@@ -201,3 +201,182 @@ print(power(3,2))
 
 # 默认参数
 # def power1(x, n=2):
+
+# 可变参数
+def calc(*nums):
+    sum1 = 0
+    for n in  nums:
+        sum1 = sum1 + n * n
+    return sum1
+
+print(calc(1, 2, 3))
+
+# Python允许你在list或tuple前面加一个*号，把list或tuple的元素变成可变参数传进去：
+
+# 关键字参数
+def person(name, age, **kw):
+    print('name', name, 'age', age, 'other', kw)
+
+extra = {'city': 'Beijing', 'job': 'Engineer'}
+person('JackMa', 50, **extra)
+
+# 命名关键字参数
+def anotherPerson(name, age, *, city, job):
+    print(name, age, city, job)
+
+anotherPerson('Sara', 15, city='NewYork', job='Dancer')
+
+# 参数组合
+# 在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，这5种参数都可以组合使用。但是请注意，参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。
+
+
+
+def product(*nums):
+    if len(nums) == 0:
+        raise TypeError('At least ONE parameter')
+
+    total1 = 1
+    for n in nums:
+        total1 *= n
+    return total1
+
+# print(product())
+
+
+
+# 在函数内部，可以调用其他函数。如果一个函数在内部调用自身本身，这个函数就是递归函数。
+
+
+
+# 切片
+l = list(range(100))
+
+print(l[:10])
+# 倒数切片
+print(l[-10:])
+
+# 前10个数，每两个取一个：
+print(l[:10:2])
+# 所有数，每5个取一个：
+print(l[::5])
+
+# 原样复制一个
+print(l[:])
+
+# 字符串切片
+str1 = 'ABCDEFG'
+print(str1[1:-1:2])
+
+
+# 迭代
+# Python的for循环不仅可以用在list或tuple上，还可以作用在其他可迭代对象上。
+for ch in str1:
+    print(ch)
+
+
+
+# 默认情况下，dict迭代的是key。如果要迭代value，可以用for value in d.values()，如果要同时迭代key和value，可以用for k, v in d.items()。
+d = {'a': 1, 'b': 2, 'c': 3}
+
+# 判断一个对象是可迭代对象
+from collections.abc import Iterable
+print(isinstance(str1, Iterable))
+
+for k in d.keys():
+    print(k)
+
+for v in d.values():
+    print(v)
+
+for k,v in d.items():
+    print(k, v)
+
+def findMinAndMax(l):
+    if len(l) == 0:
+        return (None, None)
+    else:
+        min = max = l[0]
+        for i in l:
+            if i < min:
+                min = i
+            if i > max:
+                max = i
+        return min, max
+
+
+print(findMinAndMax([1, 3, 5]))
+
+
+
+# 列表生成式
+l1 = [n1 * n1 for n1 in range(1,11)]
+print(l1)
+
+l2 = [m + n for m in 'ABC' for n in 'XYZ']
+print(l2)
+
+l3 = [n2 * n2 for n2 in range(1,11) if n2 % 2 == 0]
+print(l3)
+
+import os
+l4 = [d for d in os.listdir('.')]
+print(l4)
+
+d = {'x': 'A', 'y': 'B', 'z': 'C' }
+l5 = [k + '=' + v for k, v in d.items()]
+print(l5)
+
+# 把一个list中所有的字符串变成小写：(大写upper)
+L = ['Hello', 'World', 'IBM', 'Apple']
+print([str2.lower() for str2 in L])
+
+
+
+# 生成器(是可迭代对象)
+g = (x * x for x in range(10))
+
+for n in g:
+    print(n)
+
+# 斐波那契数列
+def fib(max):
+    n, a, b = 0, 0, 1
+    while n < max:
+        print(b)
+        a, b = b, a + b
+        n += 1
+    print('done')
+
+fib(10)
+
+def odd():
+    print('step 1')
+    yield 1
+    print('step 2')
+    yield(3)
+    print('step 3')
+    yield(5)
+
+o = odd()
+next(o)
+next(o)
+next(o)
+
+def triangles():
+    a = [1]
+    while True:
+        yield a
+        if a == [1]: a = [1,1]
+        else:
+           a = [a[i]+a[i-1] for i in range(len(a)) if i!=0 ]
+           a.insert(0, 1)
+           a.append(1)
+
+
+print(triangles())
+
+
+# 迭代器
+# 凡是可作用于for循环的对象都是Iterable类型；
+# 凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；
+# 集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
