@@ -139,3 +139,72 @@ for ch in 'programming':
 
 
 print(c)
+
+
+
+
+# base64
+import base64
+print(base64.b64encode(b'binary\x00string'))
+print(base64.b64decode(b'YmluYXJ5AHN0cmluZw=='))
+
+print(base64.urlsafe_b64encode(b'i\xb7\x1d\xfb\xef\xff'))
+print(base64.urlsafe_b64decode('abcd--__'))
+
+
+
+# struct
+import struct
+
+
+
+
+# hashlib
+import hashlib
+md5 = hashlib.md5()
+md5.update('how to use md5 in python hashlib?'.encode('utf-8'))
+print(md5.hexdigest())
+
+sha1 = hashlib.sha1()
+sha1.update('how to use sha1 in '.encode('utf-8'))
+sha1.update('python hashlib?'.encode('utf-8'))
+print(sha1.hexdigest())
+
+
+
+# hmac
+import hmac
+msg = b'Hello, World!'
+key = b'secret'
+h = hmac.new(key, msg, digestmod='MD5')
+
+print(h.hexdigest())
+
+
+
+# itertools
+
+
+
+
+# contextlib
+
+
+
+
+# urllib
+from urllib import request
+import json
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
+def fetch_data(url):
+    with request.urlopen(url) as f:
+        return json.loads(f.read())
+
+URL = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json'
+data = fetch_data(URL)
+print(data)
+assert data['query']['results']['channel']['location']['city'] == 'Beijing'
+print('ok')
+
